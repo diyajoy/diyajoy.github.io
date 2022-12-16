@@ -1,30 +1,92 @@
-<!doctype html>
-
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <title>A Basic HTML5 Template</title>
-  <meta name="description" content="A simple HTML5 Template for new projects.">
-  <meta name="author" content="SitePoint">
-
-  <meta property="og:title" content="A Basic HTML5 Template">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://www.sitepoint.com/a-basic-html5-template/">
-  <meta property="og:description" content="A simple HTML5 Template for new projects.">
-  <meta property="og:image" content="image.png">
-
-  <link rel="icon" href="/favicon.ico">
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-
-  <link rel="stylesheet" href="css/styles.css?v=1.0">
-
-</head>
-
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      Deep Learning Final Project
+    </title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
 <body>
-  <!-- your content here... -->
-  <script src="js/scripts.js"></script>
+  
+<h1>Predicting Fight Damage in Slay the Spire</h1>
+<p>
+  Slay the Spire is a deck-building video game where you face rounds of monsters, upgrading and swapping out cards in your deck as you go.
+  For my final project, I extended a mod for the game Slay the Spire that predicts the best action to take at each point in the game. 
+  This is a turn based game with deck-building, buying, and action phases, so the model is capable of recommending the best card to play during fights and best new card and relic to choose during buy phases. 
+  I found an existing mod that does exactly this, but I wanted to experiment with different network architectures and train the model on a new dataset released after the original mod was published.
+  The new dataset was much larger and allowed for improvements in test accuracy compared to the original model. I was also able to win a game using only actions recommended by the mod.
+</p>
+
+<h2>Problem Statement</h2>
+
+<p>
+The overall problem is to improve on the Slay-I mod for Slay the Spire to better predict damage taken during fights. 
+The first goal is to reduce overfitting, an issue that the original author mentioned, by adding embedding, experimenting with batch size, and adding dropout layers.
+The second goal is to preprocess a new dataset and train the original model on it, comparing training loss over number of epochs with the model trained on the original dataset.
+
+</p>
+
+<h2>Related Work</h2>
+
+<p>
+This project is based on the Slay-I mod, created by Alex Driedger. He has published the code for the model, as well as the code to load the saved model into the mod.
+
+The original datasets used for training and testing the mod were the Spire Logs dataset and the Jorbs dataset.
+
+A couple months after the original mod was written, the creators of Slay the Spire published a huge collection of over 75 million runs. 
+</p>
+
+<h2>Methodology</h2>
+
+<p>
+  First, I trained the original model to get a baseline train and test accuracy to compare with. As the original author mentioned, I saw signs of overfitting, so I experimented with various ways to reduce this.
+  I tried adding embeddings for cards and relics, varying the batch size, and adding dropout layers.
+  Once I arrived at a model less prone to overfitting, I trained it on 5 million runs from the new dataset.
+</p>
+
+
+<h2>Experiments</h2>
+
+<p>
+  To get a baseline, I trained the original model over 20 epochs and noticed strong signs of overfitting: the training loss decreased on a nice curve, but validation loss stopped decreasing much after around 5 epochs.
+
+</p>
+
+<h3>Adding Embedding</h3>
+<p>
+  The goal of embedding is to tranform sparse one-hot encoded vectors into an embedding matrix. This is helpful in cases with large dictionaries (like English words), which is not a concern here. 
+  However, it also helps the model learn relationships between inputs, which is especially relevant for Slay the Spire as certain cards/relics synergize well and upgraded cards should be associated with each other.
+
+</p>
+
+<h3>Varying Batch Size</h3>
+
+<h3>Adding Dropout Layers</h3>
+
+<h2>Results</h2>
+
+<h2>Demo</h2>
+
+<h2>Future Work</h2>
+
+<p>
+  The next big step would be to incorporate all 75 million runs of the new dataset. 
+  I only used a subset of these to keep things manageable while I experimented with other network parameters, but I would want to make use of all the data available to further better the model.
+</p>
+Abstract - in a paragraph or two, summarize the project
+
+Problem statement - what are you trying to solve/do
+
+Related work - what papers/ideas inspired you, what datasets did you use, etc
+
+Methodology - what is your approach/solution/what did you do?
+
+Experiments/evaluation - how are you evaluating your results
+
+Results - How well did you do
+
+Examples - images/text/live demo, anything to show off your work (note, demos get some extra credit in the rubric)
+
+Video - a 2-3 minute long video where you explain your project and the above information
 </body>
 </html>
